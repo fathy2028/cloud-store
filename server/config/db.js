@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-const conn=()=>{mongoose.connect("mongodb+srv://admin:lord12345@test.qymz9ur.mongodb.net/?retryWrites=true&w=majority&appName=test")
+const conn=()=>{mongoose.connect("mongodb+srv://fathynassef2025:sezar2028@cloudstore.ycfayog.mongodb.net/?retryWrites=true&w=majority&appName=cloudstore")
 .then(()=>{
     console.log("connected")
 }).catch((err)=>{
