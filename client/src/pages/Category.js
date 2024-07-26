@@ -13,7 +13,7 @@ const Category = () => {
     const [loading, setLoading] = useState(false);
     const [cart, setCart] = useCart();
     const navigate = useNavigate();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-test-api.vercel.app"
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
 
     const fetchProductsByCategory = async () => {
         try {

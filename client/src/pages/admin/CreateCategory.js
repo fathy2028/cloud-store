@@ -12,7 +12,7 @@ const CreateCategory = () => {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
   const [updatedname, setUpdatedName] = useState("");
-  const backendUrl = process.env.BACKEND_URL || "https://cloud-test-api.vercel.app"
+  const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
 
   const handlesubmit = async (e) => {
     e.preventDefault();
