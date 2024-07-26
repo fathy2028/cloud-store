@@ -1,0 +1,11 @@
+.form-control{
+    min-width: 700px;
+    min-height: 35px;
+}
+.form-control,
+.btn-primary {
+  font-size: 0.875rem;
+  justify-content: center;
+  border-right: 5px;
+  width: 200px;
+}
