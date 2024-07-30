@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 
 // Configure CORS
 const corsOptions = {
-  origin: 'https://cloud-store.vercel.app',
+  origin: 'https://cloud-stores-elsayed-nassef.vercel.app',
 };
 
 app.use(cors(corsOptions));

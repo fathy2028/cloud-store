@@ -10,7 +10,7 @@
     {
       "src": "/(.*)",
       "headers": {
-        "Access-Control-Allow-Origin": "https://cloud-store.vercel.app",
+        "Access-Control-Allow-Origin": "https://cloud-stores-elsayed-nassef.vercel.app",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization"
       },
