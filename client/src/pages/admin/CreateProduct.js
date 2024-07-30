@@ -19,7 +19,7 @@ const CreateProduct = () => {
   const [shipping, setShipping] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
-  const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+  const backendUrl = process.env.BACKEND_URL;
 
   const getallCategories = async () => {
     try {

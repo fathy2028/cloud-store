@@ -15,7 +15,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.json())
 app.use(morgan("dev"))
-app.use(cors())
+const corsOptions = {
+    origin: 'https://cloud-pharmacy.vercel.app',
+  };
+  
+  app.use(cors(corsOptions));
 conn();
 dotenv.config();
 //routes
@@ -29,7 +33,7 @@ app.get("/",(req,res)=>{
         message:"welcome to cloud pharmacy"
     })
 })
-const PORT= process.env.PORT || 8080;
+const PORT= process.env.PORT || 8000;
 app.listen(PORT,()=>{
     console.log(`server running on ${process.env.DEV_MODE} mode ${PORT}`.green);
 })
