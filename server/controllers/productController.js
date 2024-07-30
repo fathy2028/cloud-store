@@ -3,24 +3,14 @@ import orderModel from "../models/orderModel.js";
 import slugify from "slugify";
 import multer from 'multer';
 
-filename="";
-const mystore=multer.diskStorage({
-    destination:"./uploads",
-    filename: (req,file,redirect)=>{
-        let date=Date.now();
-        let fl=date+"."+file.mimetype.split("/")[1];
-        redirect(null,fl);
-        filename=fl;
-    }
-})
-const upload=multer({storage:mystore});
+const upload = multer({ dest: 'uploads/' });
+
 // Create Product Controller
 export const createProductController = [
   upload.single('photo'),
   async (req, res) => {
     try {
       const { name, description, price, category, quantity, shipping } = req.body;
-      const photo = filename;
 
       // Validation
       if (!name) return res.status(400).send({ message: "Name is required" });
@@ -29,7 +19,9 @@ export const createProductController = [
       if (!category) return res.status(400).send({ message: "Category is required" });
       if (!quantity) return res.status(400).send({ message: "Quantity is required" });
       if (!shipping) return res.status(400).send({ message: "Shipping is required" });
-      if (!photo) return res.status(400).send({ message: "Photo is required" });
+      if (!req.file) return res.status(400).send({ message: "Photo is required" });
+
+      const photo = req.file.filename;
 
       const product = new productModel({
         name,
@@ -49,7 +41,7 @@ export const createProductController = [
         message: "Product created successfully",
         product: {
           ...product._doc,
-          photo: undefined // Exclude photo from the main response
+          photo // Include photo in the main response
         }
       });
     } catch (error) {
@@ -144,13 +136,16 @@ export const updateProductController = [
     try {
       const id = req.params.id;
       const { name, description, price, category, quantity, shipping } = req.body;
-      const photo = filename;
 
-      const updatedFields = { name, description, price, category, quantity, shipping,photo };
+      const updatedFields = { name, description, price, category, quantity, shipping };
 
       if (name) {
         updatedFields.slug = slugify(name);
       }
+      if (req.file) {
+        updatedFields.photo = req.file.filename;
+      }
+
       const updatedProduct = await productModel.findByIdAndUpdate(
         id,
         updatedFields,
@@ -182,7 +177,6 @@ export const updateProductController = [
     }
   }
 ];
-
 // Delete Product Controller
 export const deleteProductController = async (req, res) => {
   try {
