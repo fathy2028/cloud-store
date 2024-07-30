@@ -152,9 +152,9 @@ const HomePage = () => {
   };
 
   return (
-    <Mylayout title={"Home - Cloud Pharmacy"}>
+    <Mylayout title={"Home - Cloud Store"}>
       <div className='container'>
-        <div className='slider-container'>
+        <div className='slider-container pt-6'>
           <Slider {...sliderSettings}>
             {sliderImages.map((image, index) => (
               <div key={index}>

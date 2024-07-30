@@ -17,7 +17,7 @@ const Search = () => {
     };
 
     return (
-        <Mylayout title={"Search - Cloud Pharmacy"}>
+        <Mylayout title={"Search - Cloud Store"}>
             <div className='container'>
                 <div className='text-center'>
                     <h1>Search Result</h1>

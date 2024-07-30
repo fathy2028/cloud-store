@@ -91,7 +91,7 @@ const CartPage = () => {
     };
 
     return (
-        <Mylayout>
+        <Mylayout title={"Cart - Cloud - Store"}>
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-12'>

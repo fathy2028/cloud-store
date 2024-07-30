@@ -47,7 +47,7 @@ const Category = () => {
     };
 
     return (
-        <Mylayout title={`Products in ${category.name} - Cloud Pharmacy`}>
+        <Mylayout title={`Products in ${category.name} - Cloud Store`}>
             <div className='row mt-3'>
                 <div className='col-md-12'>
                     <h1 className='text-center'>{category.name} Products</h1>

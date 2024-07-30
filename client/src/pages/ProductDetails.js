@@ -51,7 +51,7 @@ const ProductDetails = () => {
     };
 
     return (
-        <Mylayout title={"Product Details - Cloud Pharmacy"}>
+        <Mylayout title={"Product Details - Cloud Store"}>
             <div className='row container mt-2'>
                 <div className='col-md-6'>
                     <img 

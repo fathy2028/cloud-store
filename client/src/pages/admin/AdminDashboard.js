@@ -5,7 +5,7 @@ import { useAuth } from '../../context/auth';
 const AdminDashboard = () => {
   const [auth]=useAuth()
   return (
-    <Mylayout title={"Dashboard - Cloud Pharmacy"}>
+    <Mylayout title={"Dashboard - Cloud Store"}>
     <div className='container-fluid m-3 p-3'>
       <div className='row'>
       <div className='col-md-3'>

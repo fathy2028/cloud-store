@@ -3,7 +3,7 @@ import Layout from "./../components/Layout/Mylayout";
 import about from "../images/about.jpeg"
 const AboutPage = () => {
   return (
-    <Layout title={"About us - Cloud Pharmacy"}>
+    <Layout title={"About us - Cloud Store"}>
       <div className="row contactus ">
         <div className="col-md-6 ">
           <img
