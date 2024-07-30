@@ -13,8 +13,8 @@
 
 .slider-image {
   width: 100%;
-  height: 400px;
-  object-fit: cover;
+  height: 400px; /* Adjust height as needed */
+  object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
 }
 
 .product-container {
@@ -28,7 +28,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: calc(25% - 20px);
+  width: calc(25% - 20px); /* 4 cards per row */
   margin-bottom: 20px;
   transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -40,8 +40,8 @@
 
 .product-image {
   width: 100%;
-  height: 200px;
-  object-fit:fill;
+  height: 200px; /* Adjust height as needed */
+  object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
 }
 
 .product-info {
