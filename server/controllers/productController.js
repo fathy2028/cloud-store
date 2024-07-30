@@ -3,7 +3,7 @@ import orderModel from "../models/orderModel.js";
 import slugify from "slugify";
 import multer from 'multer';
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: ',/uploads' });
 
 // Create Product Controller
 export const createProductController = [
