@@ -8,10 +8,10 @@ import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices';
 import { useCart } from '../context/cart';
 import Slider from 'react-slick';
-import pharmacy1 from '../images/pharmacy1.jpg';
-import pharmacy2 from '../images/pharmacy2.jpg';
-import pharmacy3 from '../images/pharmacy3.jpg';
-import pharmacy4 from '../images/pharmacy4.jpg';
+import pharmacy1 from '../images/store1.jpg';
+import pharmacy2 from '../images/store2.jpg';
+import pharmacy3 from '../images/store3.jpg';
+import pharmacy4 from '../images/store4.jpg';
 
 const sliderImages = [
   pharmacy1,
