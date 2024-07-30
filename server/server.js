@@ -33,7 +33,7 @@ app.get("/",(req,res)=>{
         message:"welcome to cloud pharmacy"
     })
 })
-const PORT= process.env.PORT || 8000;
+const PORT= process.env.PORT || 8001;
 app.listen(PORT,()=>{
     console.log(`server running on ${process.env.DEV_MODE} mode ${PORT}`.green);
 })
