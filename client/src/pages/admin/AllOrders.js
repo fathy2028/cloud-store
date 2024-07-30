@@ -9,7 +9,7 @@ const AllOrders = () => {
     const [orders, setOrders] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [auth] = useAuth();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-ruby.vercel.app"
 
     useEffect(() => {
         if (auth?.token) {

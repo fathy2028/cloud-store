@@ -9,7 +9,7 @@ const Search = () => {
     const [values] = useSearch();
     const navigate = useNavigate();
     const [cart, setCart] = useCart();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-ruby.vercel.app"
 
     // Function to get the URL for product photo
     const getProductPhotoUrl = (productId) => {

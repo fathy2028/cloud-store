@@ -12,7 +12,7 @@ const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
     const navigate = useNavigate();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-ruby.vercel.app"
 
     const getProduct = async () => {
         try {

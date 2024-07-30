@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [auth, setAuth] = useAuth();
-  const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app"
+  const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-ruby.vercel.app"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
