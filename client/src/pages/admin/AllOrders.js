@@ -9,7 +9,7 @@ const AllOrders = () => {
     const [orders, setOrders] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [auth] = useAuth();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
     useEffect(() => {
         if (auth?.token) {
@@ -85,6 +85,10 @@ const AllOrders = () => {
         order.customer && order.customer.name && order.customer.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const getProductPhotoUrl = (productId) => {
+        return `${backendUrl}/api/v1/product/get-product-photo/${productId}`;
+    };
+
     return (
         <Mylayout title={"Dashboard - All Orders"}>
             <div className="container-fluid m-3 p-3">
@@ -118,7 +122,7 @@ const AllOrders = () => {
                                             {order.products.map((product) => (
                                                 <div key={product._id} className="d-flex align-items-center me-2 mb-2">
                                                     <img
-                                                        src={`${backendUrl}/uploads/${product.photo}`} // Use the backend URL for the image source
+                                                        src={getProductPhotoUrl(product._id)}
                                                         alt={product.name}
                                                         width="50"
                                                         height="50"

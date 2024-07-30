@@ -13,7 +13,7 @@ const Register = () => {
   const [address, setAddress] = useState("");
   const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
-  const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+  const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app"
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -13,7 +13,7 @@ const Category = () => {
     const [loading, setLoading] = useState(false);
     const [cart, setCart] = useCart();
     const navigate = useNavigate();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
     const fetchProductsByCategory = async () => {
         try {
@@ -41,6 +41,11 @@ const Category = () => {
         }
     }, [id]);
 
+    // Function to get the URL for product photo
+    const getProductPhotoUrl = (productId) => {
+        return `${backendUrl}/api/v1/product/get-product-photo/${productId}`;
+    };
+
     return (
         <Mylayout title={`Products in ${category.name} - Cloud Pharmacy`}>
             <div className='row mt-3'>
@@ -50,15 +55,34 @@ const Category = () => {
                         {products.length > 0 ? (
                             products.map(product => (
                                 <div key={product._id} className='product-card'>
-                                    <img src={`${backendUrl}/uploads/${product.photo}`} alt={product.name} className='product-image' />
+                                    <img 
+                                        src={getProductPhotoUrl(product._id)} 
+                                        alt={product.name} 
+                                        className='product-image' 
+                                    />
                                     <div className='product-info'>
                                         <h3 className='product-name'>{product.name}</h3>
                                         <p className='product-description'>{product.description.substring(0, 40)}</p>
                                         <p className='product-price'><b>EGP</b>{product.price}</p>
                                     </div>
                                     <div className='product-buttons'>
-                                        <button className='btn btn-primary' onClick={() => { setCart([...cart, product]); toast.success("Item added to cart successfully"); localStorage.setItem("cart", JSON.stringify([...cart, product])) }}>Add to Cart</button>
-                                        <button className='btn btn-secondary' onClick={() => navigate(`/product/${product._id}`)}>More Details</button>
+                                        <button 
+                                            className='btn btn-primary' 
+                                            onClick={() => { 
+                                                const updatedCart = [...cart, product];
+                                                setCart(updatedCart); 
+                                                localStorage.setItem("cart", JSON.stringify(updatedCart));
+                                                toast.success("Item added to cart successfully"); 
+                                            }}
+                                        >
+                                            Add to Cart
+                                        </button>
+                                        <button 
+                                            className='btn btn-secondary' 
+                                            onClick={() => navigate(`/product/${product._id}`)}
+                                        >
+                                            More Details
+                                        </button>
                                     </div>
                                 </div>
                             ))

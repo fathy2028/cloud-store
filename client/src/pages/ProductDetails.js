@@ -12,7 +12,7 @@ const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
     const navigate = useNavigate();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
     const getProduct = async () => {
         try {
@@ -45,6 +45,11 @@ const ProductDetails = () => {
         }
     };
 
+    // Function to get the URL for product photo
+    const getProductPhotoUrl = (productId) => {
+        return `${backendUrl}/api/v1/product/get-product-photo/${productId}`;
+    };
+
     return (
         <Mylayout title={"Product Details - Cloud Pharmacy"}>
             <div className='row container mt-2'>
@@ -53,7 +58,7 @@ const ProductDetails = () => {
                         style={{ objectFit: "cover" }} 
                         height={"400px"} 
                         width={"400px"} 
-                        src={`${backendUrl}/uploads/${product.photo}`} 
+                        src={getProductPhotoUrl(product._id)} 
                         alt={product.name}  
                     />
                 </div>
@@ -83,7 +88,7 @@ const ProductDetails = () => {
                         <div key={product._id} className='product-card'>
                             <img 
                                 style={{ objectFit: "cover" }} 
-                                src={`${backendUrl}/uploads/${product.photo}`} 
+                                src={getProductPhotoUrl(product._id)} 
                                 alt={product.name} 
                                 className='product-image' 
                             />

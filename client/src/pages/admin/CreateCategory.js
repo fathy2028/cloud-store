@@ -4,7 +4,7 @@ import AdminMenu from '../../components/Layout/AdminMenu';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
-import { Modal } from 'antd';
+import { Modal } from "antd";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -12,7 +12,7 @@ const CreateCategory = () => {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
   const [updatedname, setUpdatedName] = useState("");
-  const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+  const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
   const handlesubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ const CreateCategory = () => {
     try {
       const { data } = await axios.put(`${backendUrl}/api/v1/category/update-category/${selected._id}`, { name: updatedname });
       if (data.success) {
-        toast.success(`Category name is ${updatedname} now`);
+        toast.success(`Category name is now ${updatedname}`);
         setSelected(null);
         setUpdatedName("");
         setVisible(false);
@@ -54,7 +54,7 @@ const CreateCategory = () => {
     try {
       const { data } = await axios.delete(`${backendUrl}/api/v1/category/deletecategory/${id}`);
       if (data.success) {
-        toast.success("Deleted successfully");
+        toast.success(`Deleted successfully`);
         setSelected(null);
         getallCategories();
       } else {

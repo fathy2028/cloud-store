@@ -15,7 +15,8 @@ const Products = () => {
   const fileInputRef = useRef(null);
   const [form] = Form.useForm();
   const [searchTerm, setSearchTerm] = useState("");
-  const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+
+  const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
   const getAllProducts = async () => {
     try {
@@ -70,22 +71,23 @@ const Products = () => {
   };
 
   const handleUpdate = async (values) => {
-    try {
-      const formData = new FormData();
-      Object.keys(values).forEach(key => {
-        formData.append(key, values[key]);
-      });
-      if (file) {
-        formData.append('photo', file);
-      }
+    const formData = new FormData();
+    Object.keys(values).forEach((key) => {
+      formData.append(key, values[key]);
+    });
+    if (file) {
+      formData.append("photo", file);
+    }
 
+    try {
       const { data } = await axios.put(`${backendUrl}/api/v1/product/update-product/${editingProduct._id}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
       if (data?.success) {
         message.success("Product updated successfully");
+        window.location.reload()
         getAllProducts();
         setIsModalVisible(false);
         setEditingProduct(null);
@@ -165,7 +167,14 @@ const Products = () => {
       title: 'Photo',
       dataIndex: 'photo',
       key: 'photo',
-      render: (photo) => <img src={`${backendUrl}/uploads/${photo}`} alt={photo} width="50" height="50" />,
+      render: (photo, record) => (
+        <img
+          src={`${backendUrl}/api/v1/product/get-product-photo/${record._id}`}
+          alt={record.name}
+          width="50"
+          height="50"
+        />
+      ),
     },
     {
       title: 'Actions',

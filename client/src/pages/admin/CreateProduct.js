@@ -19,8 +19,9 @@ const CreateProduct = () => {
   const [shipping, setShipping] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
-  const backendUrl = process.env.BACKEND_URL;
+  const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
+  // Fetch all categories
   const getallCategories = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/v1/category/getcategories`);
@@ -49,16 +50,18 @@ const CreateProduct = () => {
 
   const handleCreateProduct = async (e) => {
     e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("description", description);
-      formData.append("price", price);
-      formData.append("category", category);
-      formData.append("quantity", quantity);
-      formData.append("shipping", shipping);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("quantity", quantity);
+    formData.append("shipping", shipping);
+    if (photo) {
       formData.append("photo", photo);
+    }
 
+    try {
       const { data } = await axios.post(`${backendUrl}/api/v1/product/create-product`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [auth] = useAuth();
-  const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+  const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -53,6 +53,11 @@ const Orders = () => {
     }
   };
 
+  // Function to get the URL for product photo
+  const getProductPhotoUrl = (productId) => {
+    return `${backendUrl}/api/v1/product/get-product-photo/${productId}`;
+  };
+
   return (
     <Mylayout title={"Dashboard - Orders"}>
       <div className='container-fluid m-3 p-3'>
@@ -81,11 +86,11 @@ const Orders = () => {
                       <div key={product._id} className="row mb-2">
                         <div className="col-md-4">
                           <img 
-                            src={`${backendUrl}/uploads/${product.photo}`} 
+                            src={getProductPhotoUrl(product._id)} 
                             alt={product.name} 
                             width="100" 
                             height="100" 
-                            style={{ objectFit: 'cover' }} // Use 'cover' for better fit
+                            style={{ objectFit: 'fill' }} 
                           />
                         </div>
                         <div className="col-md-8">

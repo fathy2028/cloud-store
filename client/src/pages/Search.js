@@ -9,7 +9,12 @@ const Search = () => {
     const [values] = useSearch();
     const navigate = useNavigate();
     const [cart, setCart] = useCart();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
+
+    // Function to get the URL for product photo
+    const getProductPhotoUrl = (productId) => {
+        return `${backendUrl}/api/v1/product/get-product-photo/${productId}`;
+    };
 
     return (
         <Mylayout title={"Search - Cloud Pharmacy"}>
@@ -22,7 +27,7 @@ const Search = () => {
                             <div key={product._id} className='product-card'>
                                 <img 
                                     style={{ objectFit: "cover" }} 
-                                    src={`${backendUrl}/uploads/${product.photo}`} 
+                                    src={getProductPhotoUrl(product._id)} 
                                     alt={product.name} 
                                     className='product-image' 
                                 />

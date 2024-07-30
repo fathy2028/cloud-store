@@ -10,7 +10,7 @@ const CartPage = () => {
     const [cart, setCart] = useCart();
     const [auth] = useAuth();
     const navigate = useNavigate();
-    const backendUrl = process.env.BACKEND_URL || "https://cloud-store-api-gamma.vercel.app"
+    const backendUrl = process.env.BACKEND_URL || "https://cloud-pharmacy-api.vercel.app";
 
     const addToCart = (product) => {
         let newCart = [...cart];
@@ -85,6 +85,11 @@ const CartPage = () => {
         }
     };
 
+    // Function to get the URL for product photo
+    const getProductPhotoUrl = (productId) => {
+        return `${backendUrl}/api/v1/product/get-product-photo/${productId}`;
+    };
+
     return (
         <Mylayout>
             <div className='container'>
@@ -103,7 +108,14 @@ const CartPage = () => {
                         {uniqueProducts.map(p => (
                             <div key={p._id} className='row mb-2 card p-3 flex-row'>
                                 <div className='col-md-4'>
-                                    <img style={{ objectFit: "fill" }} width={"100px"} height={"100px"} src={`${backendUrl}/uploads/${p.photo}`} alt={p.name} className='product-image' />
+                                    <img 
+                                        style={{ objectFit: "fill" }} 
+                                        width={"100px"} 
+                                        height={"100px"} 
+                                        src={getProductPhotoUrl(p._id)} 
+                                        alt={p.name} 
+                                        className='product-image' 
+                                    />
                                 </div>
                                 <div className='col-md-8'>
                                     <h4>{p.name}</h4>

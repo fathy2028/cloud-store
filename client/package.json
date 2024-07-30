@@ -1,7 +1,6 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "https://cloud-test-api.vercel.app",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
@@ -10,6 +9,8 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.19.3",
     "axios": "^1.7.2",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
