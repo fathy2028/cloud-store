@@ -3,7 +3,7 @@ import orderModel from "../models/orderModel.js";
 import slugify from "slugify";
 import multer from 'multer';
 
-const upload = multer(); // Middleware to handle file uploads
+const upload = multer({ dest: './uploads' }); // Middleware to handle file uploads
 
 // Create Product Controller
 export const createProductController = [
@@ -30,10 +30,7 @@ export const createProductController = [
         category,
         quantity,
         shipping,
-        photo: {
-          data: photo.buffer,
-          contentType: photo.mimetype,
-        }
+        photo: req.file.filename
       });
 
       await product.save();
@@ -43,7 +40,7 @@ export const createProductController = [
         message: "Product created successfully",
         product: {
           ...product._doc,
-          photo: undefined // Exclude photo from the main response
+
         }
       });
     } catch (error) {
@@ -147,10 +144,7 @@ export const updateProductController = [
       }
 
       if (photo) {
-        updatedFields.photo = {
-          data: photo.buffer,
-          contentType: photo.mimetype,
-        };
+        updatedFields.photo = req.file.filename
       }
 
       const updatedProduct = await productModel.findByIdAndUpdate(
