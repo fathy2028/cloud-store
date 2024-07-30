@@ -1,11 +1,12 @@
 import productModel from "../models/productModel.js";
 import orderModel from "../models/orderModel.js";
 import slugify from "slugify";
-import multer from 'multer';
-import fs from 'fs';
-import path from 'path';
+import multer from "multer";
+import fs from "fs";
+import path from "path";
 
-const upload = multer({ dest: './uploads' });
+
+const upload = multer({ dest: './uploads' }); 
 
 // Create Product Controller
 export const createProductController = [
@@ -57,58 +58,52 @@ export const createProductController = [
   }
 ];
 
+
 // Get All Products Controller
 export const getallProductController = async (req, res) => {
-  try {
-    const products = await productModel.find().populate("category").limit(12).sort({ createdAt: -1 });
-    res.status(200).send({
-      success: true,
-      numproducts: products.length,
-      message: "Products fetched successfully",
-      products: products.map(product => ({
-        ...product._doc// Exclude photo from the main response
-      }))
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Products cannot be fetched",
-      error
-    });
-  }
+    try {
+        const products = await productModel.find().populate("category").limit(12).sort({ createdAt: -1 });
+        res.status(200).send({
+            success: true,
+            numproducts: products.length,
+            message: "Products fetched successfully",
+            products
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Products cannot be fetched",
+            error
+        });
+    }
 };
 
 // Get Single Product Controller
 export const getProductController = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const product = await productModel.findById(id).populate("category", "name");
-    if (!product) {
-      return res.status(404).send({
-        success: false,
-        message: "Product not found"
-      });
+    try {
+        const id = req.params.id;
+        const product = await productModel.findById(id).populate("category", "name"); // populate category with only the name field
+        if (!product) {
+            return res.status(404).send({
+                success: false,
+                message: "Product not found"
+            });
+        }
+        res.status(200).send({
+            success: true,
+            message: "Product fetched successfully",
+            product
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error while getting the product",
+            error
+        });
     }
-    res.status(200).send({
-      success: true,
-      message: "Product fetched successfully",
-      product: {
-        ...product._doc,
-        photo: undefined // Exclude photo from the main response
-      }
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error while getting the product",
-      error
-    });
-  }
 };
-
-// Get Product Photo Controller
 
 // Update Product Controller
 export const updateProductController = [
@@ -117,16 +112,17 @@ export const updateProductController = [
     try {
       const id = req.params.id;
       const { name, description, price, category, quantity, shipping } = req.body;
+      const photo = req.file
 
       const updatedFields = { name, description, price, category, quantity, shipping };
 
       if (name) {
         updatedFields.slug = slugify(name);
       }
-      if (req.file) {
-        updatedFields.photo = req.file.filename;
-      }
-
+ 
+      if (photo) {
+        updatedFields.photo = req.file.filename; // Update the photo field if a new photo is uploaded
+    }
       const updatedProduct = await productModel.findByIdAndUpdate(
         id,
         updatedFields,
@@ -144,8 +140,7 @@ export const updateProductController = [
         success: true,
         message: "Product updated successfully",
         product: {
-          ...updatedProduct._doc,
-          photo: undefined // Exclude photo from the main response
+          ...updatedProduct._doc
         }
       });
     } catch (error) {
@@ -158,51 +153,51 @@ export const updateProductController = [
     }
   }
 ];
+
 // Delete Product Controller
 export const deleteProductController = async (req, res) => {
-  try {
-      const id = req.params.id;
-      const product = await productModel.findById(id);
+    try {
+        const id = req.params.id;
+        const product = await productModel.findById(id);
 
-      if (!product) {
-          return res.status(404).send({
-              success: false,
-              message: "Product not found"
-          });
-      }
+        if (!product) {
+            return res.status(404).send({
+                success: false,
+                message: "Product not found"
+            });
+        }
 
-      // Check if the product exists in any orders
-      const orders = await orderModel.find({ products: id });
-      if (orders.length > 0) {
-          return res.status(400).send({
-              success: false,
-              message: "Cannot delete product as it exists in orders"
-          });
-      }
+        // Check if the product exists in any orders
+        const orders = await orderModel.find({ products: id });
+        if (orders.length > 0) {
+            return res.status(400).send({
+                success: false,
+                message: "Cannot delete product as it exists in orders"
+            });
+        }
 
-      const photoPath = path.join(__dirname, '..', 'uploads', product.photo);
+        const photoPath = path.join(__dirname, '..', 'uploads', product.photo);
 
-      // Remove the photo file from the uploads folder
-      if (fs.existsSync(photoPath)) {
-          fs.unlinkSync(photoPath);
-      }
+        // Remove the photo file from the uploads folder
+        if (fs.existsSync(photoPath)) {
+            fs.unlinkSync(photoPath);
+        }
 
-      await productModel.findByIdAndDelete(id);
+        await productModel.findByIdAndDelete(id);
 
-      res.status(200).send({
-          success: true,
-          message: "Product deleted successfully"
-      });
-  } catch (error) {
-      console.log(error);
-      res.status(500).send({
-          success: false,
-          message: "Error in deleting product",
-          error
-      });
-  }
+        res.status(200).send({
+            success: true,
+            message: "Product deleted successfully"
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error in deleting product",
+            error
+        });
+    }
 };
-// Product Filter Controller
 export const productFillterController = async (req, res) => {
     try {
       const { checked, radio } = req.body;
@@ -228,8 +223,7 @@ export const productFillterController = async (req, res) => {
     }
   };
 
-// Product Count Controller
-export const productCountController=async(req,res)=>{
+  export const productCountController=async(req,res)=>{
     try {
         const total=await productModel.find({}).estimatedDocumentCount();
         res.status(200).send({
@@ -246,8 +240,7 @@ export const productCountController=async(req,res)=>{
     }
   }
 
-// Product List Controller
-export const productListController= async(req,res)=>{
+  export const productListController= async(req,res)=>{
     try {
         const perPage=8;
         const page=req.params.page ? req.params.page : 1
@@ -266,8 +259,7 @@ export const productListController= async(req,res)=>{
     }
   }
 
-// Search Product Controller
-export const searchProductController = async (req, res) => {
+  export const searchProductController = async (req, res) => {
     try {
         const { keyword } = req.params;
         const results = await productModel.find({
@@ -287,7 +279,6 @@ export const searchProductController = async (req, res) => {
     }
 }
 
-// Related Product Controller
 export const relatedProductController = async (req, res) => {
     try {
         const { pid, cid } = req.params;
@@ -318,7 +309,8 @@ export const relatedProductController = async (req, res) => {
     }
 };
 
-// Products By Category Controller
+
+
 export const productsByCategoryController = async (req, res) => {
     try {
         const { id } = req.params; // Get category ID from params
