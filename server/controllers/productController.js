@@ -2,8 +2,10 @@ import productModel from "../models/productModel.js";
 import orderModel from "../models/orderModel.js";
 import slugify from "slugify";
 import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
 
-const upload = multer({ dest: ',/uploads' });
+const upload = multer({ dest: './uploads' });
 
 // Create Product Controller
 export const createProductController = [
