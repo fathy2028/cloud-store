@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 
 // Configure CORS
 const corsOptions = {
-  origin: 'https://cloud-pharmacy.vercel.app',
+  origin: 'https://cloud-store.vercel.app',
 };
 
 app.use(cors(corsOptions));
@@ -32,6 +32,7 @@ app.use(cors(corsOptions));
 conn();
 
 // Routes
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/v1/auth', authroutes);
 app.use('/api/v1/category', categoryroute);
 app.use('/api/v1/product', productroute);
